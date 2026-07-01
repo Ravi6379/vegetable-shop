@@ -17,6 +17,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -55,7 +58,16 @@ public class Product {
 
     private LocalDateTime updatedAt;
     
-    
+    @PrePersist
+    public void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 
 	@Override
 	public String toString() {
